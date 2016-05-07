@@ -1,0 +1,11 @@
+default:
+  image: ruby:3.1.1
+
+before_script:
+  - apt update -y && apt install libpq-dev -y
+  - gem install bundler
+  - bundle install
+
+rspec:
+  script:
+    - bundle exec rake
