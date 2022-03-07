@@ -32,7 +32,6 @@ For example, if you are using [rbenv](https://cbednarski.com/articles/installing
 
 ### Project setup
 
-
 * `bin `: Executables
 * `lib `: Sources
 * `spec`: Tests
@@ -46,23 +45,13 @@ bundle install
 
 ### To run the app
 
-Make sure that the `bin/app` file has execution permissions:
-
 ```bash
-chmod +x bin/app
+bundle exec puma
 ```
 
-Then just type:
+and go to http://localhost:9292/
 
-```bash
-bin/app
-```
-
-If this doesn't work you can always do:
-
-```bash
-bundle exec ruby bin/app
-```
+Optionally you can also use `bundle exec rackup`.
 
 
 ## Tests

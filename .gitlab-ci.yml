@@ -8,4 +8,4 @@ before_script:
 
 rspec:
   script:
-    - bundle exec rake
+    - RACK_ENV=test bundle exec rake
