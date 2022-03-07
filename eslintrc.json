@@ -1,0 +1,51 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "browser":  true,
+    "node":     true,
+    "amd":      true,
+    "commonjs": true,
+    "es6":      true,
+    "jasmine":  true
+  },
+  "globals": {
+    "UI": true
+  },
+  "extends": "eslint:recommended",
+  "ignorePatterns": ["assets/js/src/prism.js"],
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-unused-vars": [
+      "error", {
+        "vars": "local",
+        "varsIgnorePattern": "UI"
+      }
+    ],
+    "max-len": ["error", 100],
+    "max-statements": ["error", 40]
+  }
+}

@@ -3,6 +3,7 @@
 require 'sinatra/base'
 
 class Webapp < Sinatra::Base
+  set :public_folder, "#{settings.root}/../public"
   set :views, "#{settings.root}/../views"
 
   get '/' do

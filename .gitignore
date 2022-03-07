@@ -1,1 +1,10 @@
 coverage
+
+node_modules
+.sass-cache
+
+assets/js/lib
+
+public/css
+public/img
+public/js

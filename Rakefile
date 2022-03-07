@@ -8,3 +8,6 @@ RuboCop::RakeTask.new
 
 task(:default).clear
 task default: %i[spec rubocop]
+
+task(:watch) { sh('npm start') }
+task(:assets) { sh('npm run assets') }

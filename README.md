@@ -14,6 +14,15 @@ API for player management, with docs and a playground.
 * Optionally, turn your repo on in Coveralls (coverage status), codeclimate (maintainability), and depfu (dependency status).
 * If you are using codeclimate, update the default branch name in the settings area.
 
+**Folder structure:**
+
+* `assets`: Dev assets
+* `public`: Compiled assets
+* `bin`: Executables
+* `lib`: Sources
+* `spec`: Tests
+* `views`: Webapp views
+
 
 ## How to use this project
 
@@ -32,20 +41,26 @@ For example, if you are using [rbenv](https://cbednarski.com/articles/installing
 
 ### Project setup
 
-* `bin `: Executables
-* `lib `: Sources
-* `spec`: Tests
+1. Download Jasmine standalone ZIP file from [the releases page](https://github.com/jasmine/jasmine/releases) and copy the `lib` folder into `assets/js/`.
 
-Install dependencies:
+1. Install dependencies:
+  ```bash
+  bundle install
+  npm install
+  ```
 
-```bash
-bundle install
-```
+1. Run the app and the tests to check that everything works (see sections below)
+
+Custom rake tasks:
+
+* `bundle exec rake assets`: Build assets (compile sass, join and minify JS and CSS files)
+* `bundle exec rake watch`: Like `assets` plus rebuilds assets on change and serves JS tests
 
 
 ### To run the app
 
 ```bash
+bundle exec rake assets
 bundle exec puma
 ```
 
@@ -54,7 +69,16 @@ and go to http://localhost:9292/
 Optionally you can also use `bundle exec rackup`.
 
 
-## Tests
+## Frontend tests
+
+```bash
+bundle exec rake watch
+```
+
+and go to http://localhost:4000/tests/
+
+
+## Backend tests
 
 
 ### To run all tests and rubocop
