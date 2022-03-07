@@ -1,0 +1,35 @@
+{
+  "name": "players-api",
+  "version": "1.0.0",
+  "description": "Players and game management",
+  "main": "public/js/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/octopusinvitro/players-api.git"
+  },
+  "author": "Octopus in vitro",
+  "license": "LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/octopusinvitro/players-api/issues"
+  },
+  "homepage": "https://github.com/octopusinvitro/players-api#readme",
+  "engines": {
+    "node": "16.x"
+  },
+  "dependencies": {
+    "babel-eslint": "^10.1.0",
+    "browser-sync": "^2.27.7",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-eslint": "^6.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "sass": "^1.49.9"
+  }
+}

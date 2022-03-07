@@ -8,3 +8,6 @@ RuboCop::RakeTask.new
 
 task(:default).clear
 task default: %i[spec rubocop]
+
+task(:watch) { sh('node_modules/gulp/bin/gulp.js') }
+task(:assets) { sh('node_modules/gulp/bin/gulp.js assets') }
