@@ -1,1 +1,206 @@
-<h1>Try it!</h1>
+<div id="toc" class="hero">
+  <h1>Try it!</h1>
+
+  <p>Try the API in the sandbox below.</p>
+  <ul>
+    <li><a href=#postplayers>POST /players</a></li>
+    <li><a href=#getplayers>GET /players</a></li>
+    <li><a href=#postgames>GET /games</a></li>
+    </ul>
+</div>
+
+<section id="postplayers" class="post">
+
+  <header>
+    <div>
+      <h2 class="post__verb">POST</h2>
+      <code class="endpoint">/players</code>
+      Add a new player
+    </div>
+    <a href="#toc">
+      (Top)
+      <svg viewBox="0 0 1792 1792" class="site-logo">
+        <use xlink:href="img/icons.svg#arrowup-icon"></use>
+      </svg>
+    </a>
+  </header>
+
+  <label for="create-player-payload">Payload example (editable):</label>
+  <textarea id="create-player-payload" name="create-player-payload" rows="6" required>
+{
+  "firstname": "Lise",
+  "lastname": "Meitner",
+  "nationality": "Austrian-Swedish",
+  "birthdate": "1878-11-07"
+}</textarea>
+  <div id="create-player-error"></div>
+  <p><button id="create-player-button">Try it out!</button></p>
+
+  Request URL:
+  <pre><code class="language-bash"><%= request.url %>api/v1/players</code></pre>
+
+  cURL:
+  <pre id="create-player-curlbox"><code class="language-bash">curl -X POST '<%= request.url %>api/v1/players' \
+  -H 'accept: application/json' -H 'Content-Type: application/json' \
+  -d '{
+  "firstname": "Lise",
+  "lastname": "Meitner",
+  "nationality": "Austrian-Swedish",
+  "birthdate": "1878-11-07"
+}'</code></pre>
+
+  Response body:
+  <pre id="create-player-response"><code class="language-json">{
+  "player": {
+    "firstname": "Lise",
+    "lastname": "Meitner",
+    "age": 42,
+    "nationality": "Austrian-Swedish",
+    "rank": "Unranked",
+    "score": 1200
+  }
+}</code></pre>
+
+  Response headers
+
+  <pre id="create-player-headers"><code class="language-bash">{
+  "content-length": "169",
+  "content-type": "application/json",
+  "x-content-type-options": "nosniff"
+}</code></pre>
+</section>
+
+<section id="getplayers" class="get">
+
+  <header>
+    <div>
+      <h2 class="get__verb">GET</h2>
+      <code class="endpoint">/players</code>
+      Get players by nationality and/or rank
+    </div>
+    <a href="#toc">
+      (Top)
+      <svg viewBox="0 0 1792 1792" class="site-logo">
+        <use xlink:href="img/icons.svg#arrowup-icon"></use>
+      </svg>
+    </a>
+  </header>
+
+  <p>Choose at least one filter option:</p>
+  <label for="show-players-nationality">Nationality</label>
+  <input type="text" id="show-players-nationality" name="show-players-nationality" placeholder="Portuguese">
+
+  <label for="show-players-rank">Rank</label>
+  <select name="show-players-rank" id="show-players-rank" multiple>
+    <option value="">--Please choose an option--</option>
+    <option value="unranked">Unranked 0 – 2</option>
+    <option value="bronze">Bronze 0 – 2999</option>
+    <option value="silver">Silver 3000 – 4999</option>
+    <option value="gold">Gold 5000 – 9999</option>
+    <option value="legend">Legend 10000 – no limit</option>
+  </select>
+  <div id="show-players-error"></div>
+  <p><button id="show-players-button">Try it out!></button></p>
+
+  Request URL:
+  <pre><code class="language-bash"><%= request.url %>api/v1/players</code></pre>
+
+  cURL:
+  <pre id="show-players-curlbox"><code class="language-bash">curl -X GET \
+  '<%= request.url %>api/v1/players?nationality=Portuguese' \
+  -H 'accept: application/json'</code></pre>
+
+  Response body:
+  <pre id="show-players-response"><code class="language-json">{
+  "players": [
+    "ranking": 1,
+    "firstname": "Lise",
+    "lastname": "Meitner",
+    "age": 32,
+    "nationality": "Austrian-Swedish",
+    "rank": "Gold",
+    "score": 3200
+  ]
+}</code></pre>
+
+  Response headers
+
+  <pre id="show-players-headers"><code class="language-bash">{
+  "content-length": "135",
+  "content-type": "application/json",
+  "x-content-type-options": "nosniff"
+}</code></pre>
+</section>
+
+<section id="postgames" class="post">
+
+  <header>
+    <div>
+      <h2 class="post__verb">POST</h2>
+      <code class="endpoint">/games</code>
+      Add a new game
+    </div>
+
+    <a href="#toc">
+      (Top)
+      <svg viewBox="0 0 1792 1792" class="site-logo">
+        <use xlink:href="img/icons.svg#arrowup-icon"></use>
+      </svg>
+    </a>
+  </header>
+
+  <label for="create-game-payload">Payload example (editable):</label>
+  <textarea id="create-game-payload" name="create-game-payload" rows="6" required>
+{
+  "winner": {
+    "firstname": "Lise",
+    "lastname": "Meitner"
+  },
+  "loser": {
+    "firstname": "Otto",
+    "lastname": "Hahn"
+  }
+}</textarea>
+  <div id="create-game-error"></div>
+  <p><button id="create-game-button">Try it out!"</button></p>
+
+  Request URL:
+  <pre><code class="language-bash"><%= request.url %>api/v1/games</code></pre>
+
+  cURL:
+  <pre id="create-game-curlbox"><code class="language-bash">curl -X POST '<%= request.url %>api/v1/games' \
+  -H 'accept: application/json' -H 'Content-Type: application/json' \
+  -d '{
+  "winner": {
+    "firstname": "Lise",
+    "lastname": "Meitner"
+  },
+  "loser": {
+    "firstname": "Otto",
+    "lastname": "Hahn"
+  }
+}'</code></pre>
+
+    Response body:
+    <pre id="create-game-response"><code class="language-json">{
+  "game": {
+    "winner": {
+      "firstname": "Lise",
+      "lastname": "Meitner",
+      "score": 6000
+    },
+    "loser": {
+      "firstname": "Otto",
+      "lastname": "Hahn",
+      "score": 1200
+    }
+  }
+}</code></pre>
+
+    Response headers
+    <pre id="create-game-headers"><code class="language-bash">{
+  "content-length": "212",
+  "content-type": "application/json",
+  "x-content-type-options": "nosniff"
+}</code></pre>
+</section>

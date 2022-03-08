@@ -17,6 +17,9 @@
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/favicon.png">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,900;1,300" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
 
   <link rel="manifest" href="site.webmanifest">
@@ -24,8 +27,39 @@
 </head>
 
 <body>
+  <div class="container">
 
-  <%= yield %>
+    <header class="site-header">
+      <h1>
+        <svg viewBox="0 0 512 512" class="site-logo">
+          <use xlink:href="img/icons.svg#favicon"></use>
+        </svg>
+
+        <a class="site-title" href="/">Players<span>API</span></a>
+      </h1>
+
+      <nav>
+        <ul class="site-navigation">
+          <li><a href="/">Try it!</a></li>
+          <li><a href="/">Docs</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main >
+      <%= yield %>
+    </main>
+
+    <footer>
+      <div>
+        <h2><a class="footer-header" href="/">Players<span>API</span></a></h2>
+        <p>Manage players and their games.
+        Built with Sinatra and PostgreSQL. Hosted in Heroku.
+        Syntax highlighting uses <a href="https://prismjs.com/download.html">prism.js by Lea Verou</a>.
+        Icons by <a href="https://www.svgrepo.com/">svgrepo.com</a></p>
+      </div>
+    </footer>
+  </div>
 
   <script src="js/main.js"></script>
 </body>

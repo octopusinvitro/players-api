@@ -13,6 +13,7 @@ const
     css: './assets/scss/main.scss',
     img: './assets/img/**',
     js: [
+      './assets/js/src/prism.js',
       './assets/js/src/ui.js',
       './assets/js/src/main.js'
     ]

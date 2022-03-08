@@ -1,0 +1,107 @@
+.post,
+.get {
+  padding: 1rem;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media screen and (min-width: 980px) {
+    padding: 5rem 7rem;
+  }
+}
+
+.get {
+  background-color: var(--accent-color-light);
+
+  @media screen and (min-width: 980px) {
+    border-radius: 5rem 0 0;
+  }
+}
+
+.post__verb,
+.get__verb {
+  display: inline-block;
+  padding: .2rem;
+  width: 5rem;
+  font-weight: 600;
+  font-size: .9rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--foreground-color);
+  border-radius: .2rem;
+}
+
+.post__verb {
+  background-color: var(--accent-color-dark);
+}
+
+.get__verb {
+  background-color: var(--secondary-color);
+}
+
+.endpoint {
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding-right: 1rem;
+}
+
+[href="#hero"] {
+  margin-left: 2rem;
+}
+
+form {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border: 2px solid currentColor;
+  border-radius: .2rem;
+}
+
+label {
+  display: block;
+  padding: 1rem 0;
+}
+
+select {
+  height: 11rem;
+}
+
+textarea,
+select,
+[type="text"] {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  color: #777;
+  background-color: transparent;
+  border: 1px solid currentColor;
+
+  @media screen and (min-width: 980px) {
+    padding: 1rem 2rem;
+    width: 70%;
+  }
+}
+
+button {
+  padding: .5rem 1rem;
+  font-weight: 600;
+  background: transparent;
+  border: 2px solid currentColor;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+
+.error-box {
+  padding: 1rem;
+  padding-left: 3rem;
+  margin-top: 1rem;
+  font-size: .8em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  background: var(--secondary-color-light) url('../img/error-icon.svg') .8rem center / 3% no-repeat;
+  border-radius: .3rem;
+}

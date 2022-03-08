@@ -8,6 +8,8 @@
 
 API for player management, with docs and a playground.
 
+![Page screenshot](screenshot.png)
+
 
 ## Project settings
 
@@ -50,6 +52,9 @@ For example, if you are using [rbenv](https://cbednarski.com/articles/installing
   ```
 
 1. Run the app and the tests to check that everything works (see sections below)
+
+1. Syntax highlighting uses [prism.js by Lea Verou](https://prismjs.com/download.html).
+  If changes are needed on the `prism.js` and `prism.scss` files in the `assets` folder, copy the URL at the top of the `prism.js` file and paste it in a browser. Add or remove options as needed and redownload the two files.
 
 Custom rake tasks:
 
