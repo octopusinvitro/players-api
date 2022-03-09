@@ -16,8 +16,21 @@ module API
 
     after_initialize :default_rank
 
+    ALLOWED_FIELDS = %i[firstname lastname nationality birthdate].freeze
     DAYS_IN_A_YEAR = 365.25
     MINIMUM_AGE = 16
+
+    def jsonify(position = nil)
+      {
+        position:,
+        firstname:,
+        lastname:,
+        age:,
+        nationality:,
+        rank: rank.name.capitalize,
+        score:
+      }.compact
+    end
 
     private
 
