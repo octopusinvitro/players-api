@@ -1,0 +1,8 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: postgres
+  database: playersapi_test
+  username: root
+  password: ''

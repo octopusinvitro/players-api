@@ -1,14 +1,23 @@
 # frozen_string_literal: true
 
+ENV['RACK_ENV'] = 'test'
+ENV['SINATRA_ENV'] = 'test'
+
 require 'coveralls'
 Coveralls.wear!
 
+require 'pg'
 require 'pry'
 require 'rack/test'
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.include Rack::Test::Methods
+
+  config.before(:each) do
+    PG.connect(dbname: 'playersapi_test').exec('truncate players, games, ranks;')
+  end
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

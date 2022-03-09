@@ -1,11 +1,16 @@
 default:
   image: ruby:3.1.1
 
+services:
+  - postgres:12.2-alpine
+
 before_script:
   - apt update -y && apt install libpq-dev -y
   - gem install bundler
   - bundle install
+  - cp config/database.gitlab.yml config/database.yml
 
 rspec:
   script:
+    - RACK_ENV=test bundle exec rake db:setup db:migrate
     - RACK_ENV=test bundle exec rake
