@@ -63,4 +63,30 @@ RSpec.describe API::Player do
       expect(player.rank.name).to eq(API::Rank::UNRANKED)
     end
   end
+
+  describe '#jsonify' do
+    let(:example) do
+      rank.save
+      player(birthdate: Date.today - 42.years)
+    end
+
+    def expected
+      {
+        firstname: 'firstname',
+        lastname: 'lastname',
+        age: 42,
+        nationality: 'nationality',
+        rank: API::Rank::UNRANKED.capitalize,
+        score: 1200
+      }
+    end
+
+    it 'returns specific player attributes' do
+      expect(example.jsonify(123)).to include({ position: 123 }.merge(expected))
+    end
+
+    it 'has no position by default' do
+      expect(example.jsonify).to include(expected)
+    end
+  end
 end
