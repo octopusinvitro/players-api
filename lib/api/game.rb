@@ -11,6 +11,23 @@ module API
 
     validate :existence
 
+    after_initialize :recalculate_score, if: :valid?
+
+    ALLOWED_FIELDS = %i[winner loser].freeze
+
+    def jsonify
+      {
+        winner: {
+          firstname: winner.firstname, lastname: winner.lastname,
+          score: winner.score
+        },
+        loser: {
+          firstname: loser.firstname, lastname: loser.lastname,
+          score: loser.score
+        }
+      }
+    end
+
     private
 
     def existence
@@ -20,6 +37,12 @@ module API
 
     def player_exists?(player)
       player&.id && Player.find(player.id)
+    end
+
+    def recalculate_score
+      giveaway = (loser.score * 0.1).round
+      loser.score -= giveaway
+      winner.score += giveaway
     end
   end
 end

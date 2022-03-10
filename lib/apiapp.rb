@@ -3,6 +3,7 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 
+require_relative 'api/game'
 require_relative 'api/player'
 
 class APIapp < Sinatra::Base
@@ -42,6 +43,21 @@ class APIapp < Sinatra::Base
     { players: }.to_json
   end
 
+  post '/games' do
+    fields = allowed_game_fields
+    game = API::Game.new(
+      winner: API::Player.find_by(fields[:winner]),
+      loser: API::Player.find_by(fields[:loser])
+    )
+
+    if game.save
+      { game: game.jsonify }.to_json
+    else
+      status :bad_request
+      { errors: game.errors.messages }.to_json
+    end
+  end
+
   private
 
   def allowed_player_fields
@@ -51,6 +67,10 @@ class APIapp < Sinatra::Base
   def filter_player_fields
     sliced = params.slice(*API::Player::FILTER_FIELDS)
     JSON.parse(sliced.to_json, symbolize_names: true)
+  end
+
+  def allowed_game_fields
+    payload.slice(*API::Game::ALLOWED_FIELDS)
   end
 
   def payload
