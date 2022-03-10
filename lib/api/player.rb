@@ -17,8 +17,28 @@ module API
     after_initialize :default_rank
 
     ALLOWED_FIELDS = %i[firstname lastname nationality birthdate].freeze
+    FILTER_FIELDS = %i[nationality rank].freeze
+
     DAYS_IN_A_YEAR = 365.25
     MINIMUM_AGE = 16
+
+    def self.filter(fields)
+      ranking = all.order(score: :desc).pluck(:id)
+      filtered = fields[:rank] ? filter_by_rank(fields) : filter_by_fields(fields)
+
+      filtered.map { |player| player.jsonify(ranking.find_index(player.id) + 1) }
+    end
+
+    def self.filter_by_rank(fields)
+      rank = fields.delete(:rank)
+      Rank.find_by(name: rank.downcase).players.where(fields).order(score: :desc)
+    end
+
+    def self.filter_by_fields(fields)
+      ranked = where.not(rank_id: Rank.unranked).where(fields).order(score: :desc)
+      unranked = Rank.unranked.players.where(fields).order(score: :desc)
+      ranked.to_a + unranked.to_a
+    end
 
     def jsonify(position = nil)
       {

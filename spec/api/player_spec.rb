@@ -7,6 +7,55 @@ RSpec.describe API::Player do
     expect(player).to be_valid
   end
 
+  describe('.filter') do
+    before { rank.save }
+
+    it 'filters unranked and sorts by score desc' do
+      player(nationality: 'French', score: 8000).save
+      player(firstname: 'lo unranked', score: 1200).save
+      player(firstname: 'hi unranked', score: 1300).save
+
+      filtered = described_class.filter(nationality: 'nationality')
+
+      expect(filtered.map { |player| player[:score] }).to eq([1300, 1200])
+    end
+
+    it 'filters ranked and sorts by score desc' do
+      gold = rank(name: 'gold')
+      bronze = rank(name: 'bronze')
+      player(nationality: 'French', score: 8000, rank: gold).save
+      player(firstname: 'lo ranked', score: 2000, rank: bronze).save
+      player(firstname: 'hi ranked', score: 6000, rank: gold).save
+
+      filtered = described_class.filter(nationality: 'nationality')
+
+      expect(filtered.map { |player| player[:score] }).to eq([6000, 2000])
+    end
+
+    it 'filters and sorts unranked below ranked' do
+      player(firstname: 'unranked', score: 1200).save
+      player(firstname: 'anotheru', score: 2000).save
+      player(firstname: 'lo ranked', score: 1300, rank: rank(name: 'bronze')).save
+      player(firstname: 'hi ranked', score: 6000, rank: rank(name: 'gold')).save
+
+      filtered = described_class.filter(nationality: 'nationality')
+
+      expect(filtered.map { |player| player[:score] }).to eq([6000, 1300, 2000, 1200])
+    end
+
+    it 'filters by rank name' do
+      bronze = rank(name: 'bronze')
+      player(firstname: 'rank 3', score: 4000, rank: bronze).save
+      player(firstname: 'rank 1', score: 1200).save
+      player(firstname: 'rank 2', score: 2000, rank: bronze).save
+      player(firstname: 'rank 4', score: 6000, rank: bronze).save
+
+      filtered = described_class.filter(rank: 'Bronze')
+
+      expect(filtered.map { |player| player[:score] }).to eq([6000, 4000, 2000])
+    end
+  end
+
   describe '#name' do
     it 'must be present' do
       expect(described_class.create.errors.messages[:firstname]).to include(/blank/)

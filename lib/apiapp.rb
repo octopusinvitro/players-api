@@ -27,10 +27,30 @@ class APIapp < Sinatra::Base
     end
   end
 
+  get '/players' do
+    fields = filter_player_fields
+
+    if fields.empty?
+      status(:bad_request)
+      message = "Wrong filters, allowed fields: #{API::Player::FILTER_FIELDS}"
+      return { errors: { players: [message] } }.to_json
+    end
+
+    players = API::Player.filter(fields)
+    return { errors: { players: ["#{status(:not_found)} Not found"] } }.to_json if players.empty?
+
+    { players: }.to_json
+  end
+
   private
 
   def allowed_player_fields
     payload.slice(*API::Player::ALLOWED_FIELDS)
+  end
+
+  def filter_player_fields
+    sliced = params.slice(*API::Player::FILTER_FIELDS)
+    JSON.parse(sliced.to_json, symbolize_names: true)
   end
 
   def payload
