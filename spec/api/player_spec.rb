@@ -111,6 +111,54 @@ RSpec.describe API::Player do
       rank(name: API::Rank::UNRANKED).save
       expect(player.rank.name).to eq(API::Rank::UNRANKED)
     end
+
+    xit 'is updated if score updates and has enough games' do
+      rank.save
+      rank(name: 'gold').save
+
+      updated = player
+      opponent = player(firstname: 'different')
+      updated.save
+      opponent.save
+
+      updated.update(score: 6000)
+      API::Game.create(winner: updated, loser: opponent)
+      API::Game.create(winner: opponent, loser: updated)
+      API::Game.create(winner: updated, loser: opponent)
+
+      expect(updated.rank.name).to eq('gold')
+    end
+
+    it 'does not update if has enough games but score is the same' do
+      bronze = rank(name: 'bronze')
+      bronze.save
+
+      updated = player(rank: bronze)
+      opponent = player(firstname: 'different')
+      updated.save
+      opponent.save
+
+      updated.update(firstname: 'updated')
+      API::Game.create(winner: updated, loser: opponent)
+      API::Game.create(winner: opponent, loser: updated)
+      API::Game.create(winner: opponent, loser: updated)
+
+      expect(updated).to_not be_attribute_changed(:rank)
+    end
+
+    it 'does not update if score updates but has not enough games' do
+      rank.save
+
+      updated = player
+      opponent = player(firstname: 'different')
+      updated.save
+      opponent.save
+
+      updated.update(score: 6000)
+      API::Game.create(winner: updated, loser: opponent)
+
+      expect(updated).to_not be_attribute_changed(:rank)
+    end
   end
 
   describe '#jsonify' do
