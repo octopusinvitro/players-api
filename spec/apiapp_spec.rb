@@ -66,4 +66,62 @@ RSpec.describe APIapp do
       end
     end
   end
+
+  describe 'show players' do
+    def show_players(fields = {})
+      get '/players', fields
+    end
+
+    before do
+      rank.save
+      player.save
+    end
+
+    context 'when success' do
+      it 'can filter by nationality' do
+        show_players(nationality: 'nationality')
+        expect(last_response).to be_ok
+      end
+
+      it 'can filter by rank name' do
+        show_players(rank: API::Rank::UNRANKED)
+        expect(last_response).to be_ok
+      end
+
+      it 'can filter by both' do
+        show_players(nationality: 'nationality', rank: API::Rank::UNRANKED)
+        expect(last_response).to be_ok
+      end
+
+      it 'returns players data' do
+        show_players(nationality: 'nationality', rank: API::Rank::UNRANKED)
+        expect(body[:players].first).to include(
+          position: 1,
+          firstname: 'firstname',
+          lastname: 'lastname',
+          age: 122,
+          nationality: 'nationality',
+          rank: API::Rank::UNRANKED.capitalize,
+          score: 1200
+        )
+      end
+    end
+
+    context 'when failure' do
+      it 'is unseccessful on filter by not allowed fields' do
+        show_players(score: 1200)
+        expect(last_response).to be_bad_request
+      end
+
+      it 'errors on filter by not allowed fields' do
+        show_players(firstname: 'firstname')
+        expect(body[:errors][:players]).to include(/Wrong/)
+      end
+
+      it 'throws 404 if no players found' do
+        show_players(nationality: 'French')
+        expect(last_response).to be_not_found
+      end
+    end
+  end
 end
