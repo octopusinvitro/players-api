@@ -15,12 +15,14 @@ module API
     validate :minimum_age
 
     after_initialize :default_rank
+    before_update :update_rank
 
     ALLOWED_FIELDS = %i[firstname lastname nationality birthdate].freeze
     FILTER_FIELDS = %i[nationality rank].freeze
 
     DAYS_IN_A_YEAR = 365.25
     MINIMUM_AGE = 16
+    MINIMUM_GAMES = 3
 
     def self.filter(fields)
       ranking = all.order(score: :desc).pluck(:id)
@@ -71,6 +73,14 @@ module API
 
     def default_rank
       self.rank ||= Rank.unranked
+    end
+
+    def update_rank
+      self.rank = can_update_rank? ? Rank.from_score(score) : self.rank
+    end
+
+    def can_update_rank?
+      attribute_changed?(:score) && (games_won + games_lost).count >= MINIMUM_GAMES
     end
   end
 end
