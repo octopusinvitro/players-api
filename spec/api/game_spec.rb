@@ -54,4 +54,44 @@ RSpec.describe API::Game do
       expect(game.errors.messages[:loser]).to include(/inexistent/)
     end
   end
+
+  describe 'scores recalculation' do
+    it 'gives high-score winner 10% of loser score' do
+      winner = player(firstname: 'Serena', score: 1000)
+      loser = player(firstname: 'Venus', score: 900)
+      [winner, loser].map(&:save)
+
+      described_class.create(winner:, loser:)
+
+      expect([winner, loser].map(&:score)).to eq([1090, 810])
+    end
+
+    it 'gives low-score winner 10% of loser score' do
+      winner = player(firstname: 'Venus', score: 700)
+      loser = player(firstname: 'Serena', score: 1200)
+      [winner, loser].map(&:save)
+
+      described_class.create(winner:, loser:)
+
+      expect([winner, loser].map(&:score)).to eq([820, 1080])
+    end
+  end
+
+  describe '#jsonify' do
+    it 'returns game attributes' do
+      expected = {
+        winner: {
+          firstname: winner.firstname,
+          lastname: winner.lastname,
+          score: winner.score
+        },
+        loser: {
+          firstname: loser.firstname,
+          lastname: loser.lastname,
+          score: loser.score
+        }
+      }
+      expect(game.jsonify).to include(expected)
+    end
+  end
 end

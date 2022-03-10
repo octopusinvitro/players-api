@@ -124,4 +124,74 @@ RSpec.describe APIapp do
       end
     end
   end
+
+  describe 'create game' do
+    let(:game) do
+      {
+        winner: {
+          firstname: 'Venus',
+          lastname: 'Williams'
+        },
+        loser: {
+          firstname: 'Rafa',
+          lastname: 'Nadal'
+        }
+      }
+    end
+
+    def create_game(fields = {})
+      post '/games', game.merge(fields).to_json, headers
+    end
+
+    before do
+      rank.save
+      player(game[:winner]).save
+      player(game[:loser]).save
+    end
+
+    context 'when success' do
+      it 'is successfull' do
+        create_game
+        expect(last_response).to be_ok
+      end
+
+      it 'creates a game' do
+        create_game
+        expect(API::Game).to exist
+      end
+
+      it 'returns created game' do
+        create_game
+        expect(body[:game]).to include(
+          winner: {
+            firstname: 'Venus',
+            lastname: 'Williams',
+            score: 1320
+          },
+          loser: {
+            firstname: 'Rafa',
+            lastname: 'Nadal',
+            score: 1080
+          }
+        )
+      end
+    end
+
+    context 'when failure' do
+      it 'is unsuccessfull' do
+        create_game(winner: { firstname: nil })
+        expect(last_response).to be_bad_request
+      end
+
+      it 'does not create a game' do
+        create_game(loser: { nationality: nil })
+        expect(API::Game).to_not exist
+      end
+
+      it 'returns all errors' do
+        create_game(winner: { firstname: 'not in db' })
+        expect(body[:errors][:winner]).to include(/inexistent/)
+      end
+    end
+  end
 end
