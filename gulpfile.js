@@ -14,6 +14,8 @@ const
     img: './assets/img/**',
     js: [
       './assets/js/src/prism.js',
+      './assets/js/src/selectors.js',
+      './assets/js/src/client.js',
       './assets/js/src/ui.js',
       './assets/js/src/main.js'
     ],
