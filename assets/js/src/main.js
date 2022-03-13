@@ -1,3 +1,3 @@
 (function() {
-  console.log((new UI()).run());
+  (new UI(new Client())).initialize();
 })();

@@ -18,6 +18,9 @@
     "jasmine":  true
   },
   "globals": {
+    "Client": true,
+    "Prism": true,
+    "Selectors": true,
     "UI": true
   },
   "extends": "eslint:recommended",
@@ -42,7 +45,7 @@
     "no-unused-vars": [
       "error", {
         "vars": "local",
-        "varsIgnorePattern": "UI"
+        "varsIgnorePattern": "Client|Selectors|UI"
       }
     ],
     "max-len": ["error", 100],
