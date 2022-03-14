@@ -201,3 +201,15 @@ bundle exec rubocop
 
 [![License](https://img.shields.io/badge/mit-license-green.svg?style=flat)](https://opensource.org/licenses/mit)
 MIT License
+
+
+## To do
+
+* [ ] Make a better database diagram for the README
+* [ ] try to make gulp-imagemin work?
+* [ ] Make it a PWA ?
+* [ ] Write the docs page. The documentation should contain:
+    - relevant endpoints of the API
+    - example requests of the endpoints
+    - examples in several programming languages?
+    - messages listed for different errors with their status codes
